@@ -1,14 +1,25 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>רון טבקמן הנדסה</title>
+<meta name="description" content="רון טבקמן הנדסה — בית מלאכה טכני בקיבוץ העוגן: חרטוט, ריתוך והנדסה מכנית. עבודה מדויקת לפי מידה, זמינות גבוהה ויצירת קשר ישירה.">
+<meta name="theme-color" content="#B34D12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@300;400;500;600;700&display=swap">
 <style>
   :root{
     --bg:#EEF1F3;
     --bg-elevated:#FFFFFF;
     --ink:#171B20;
     --ink-soft:#4B535C;
-    --ink-faint:#7A828B;
+    --ink-faint:#5B6570;
     --line:#C7CDD3;
     --line-strong:#9CA6AF;
     --accent:#D9611B;
+    --accent-strong:#B34D12;
     --accent-ink:#7A3200;
     --accent-soft:#F3D9C4;
     --steel:#3E5C76;
@@ -23,10 +34,11 @@
       --bg-elevated:#1C2126;
       --ink:#EDEFF1;
       --ink-soft:#ABB4BC;
-      --ink-faint:#7A828B;
+      --ink-faint:#8C94A0;
       --line:#333A41;
       --line-strong:#454E56;
       --accent:#FF8A3D;
+      --accent-strong:#C85F1C;
       --accent-ink:#FFD9B8;
       --accent-soft:#3A2416;
       --steel:#8FB2D1;
@@ -40,10 +52,11 @@
     --bg-elevated:#1C2126;
     --ink:#EDEFF1;
     --ink-soft:#ABB4BC;
-    --ink-faint:#7A828B;
+    --ink-faint:#8C94A0;
     --line:#333A41;
     --line-strong:#454E56;
     --accent:#FF8A3D;
+    --accent-strong:#C85F1C;
     --accent-ink:#FFD9B8;
     --accent-soft:#3A2416;
     --steel:#8FB2D1;
@@ -80,6 +93,21 @@
   ::selection{background:var(--accent);color:#fff;}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 
+  .visually-hidden{
+    position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+
+  /* --- skip link --- */
+  .skip-link{
+    position:fixed;top:-60px;inset-inline-start:16px;z-index:200;
+    background:var(--accent-strong);color:#fff;
+    padding:12px 20px;border-radius:var(--radius);
+    font-weight:600;text-decoration:none;
+    transition:top .15s ease;
+  }
+  .skip-link:focus{top:16px;}
+
   /* --- topbar --- */
   .topbar{
     position:sticky;top:0;z-index:40;
@@ -89,12 +117,12 @@
   }
   .topbar-row{
     display:flex;align-items:center;justify-content:space-between;
-    gap:16px;padding-block:14px;
+    gap:16px;padding-block:14px;flex-wrap:wrap;
   }
   .wordmark{
     font-size:1.15rem;
     display:flex;align-items:baseline;gap:8px;
-    white-space:nowrap;
+    flex-wrap:wrap;
   }
   .wordmark small{
     font-family:'Heebo',sans-serif;
@@ -109,11 +137,11 @@
     transition:color .15s ease, border-color .15s ease;
   }
   nav.main-nav a:hover{color:var(--ink);border-color:var(--accent);}
-  .portal-btns{display:flex;gap:10px;}
+  .portal-btns{display:flex;gap:10px;align-items:center;}
   .btn{
-    display:inline-flex;align-items:center;gap:8px;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
     font-family:'Heebo',sans-serif;font-size:0.86rem;font-weight:600;
-    padding:9px 18px;border-radius:var(--radius);
+    min-height:44px;padding:9px 18px;border-radius:var(--radius);
     border:1px solid var(--line-strong);background:transparent;color:var(--ink);
     cursor:pointer;text-decoration:none;white-space:nowrap;
     transition:transform .12s ease, background .15s ease, border-color .15s ease;
@@ -121,11 +149,15 @@
   .btn:hover{border-color:var(--accent);transform:translateY(-1px);}
   .btn-ghost{border-color:transparent;background:var(--steel-soft);color:var(--steel);}
   .btn-primary{
-    background:var(--accent);border-color:var(--accent);color:#fff;
+    background:var(--accent-strong);border-color:var(--accent-strong);color:#fff;
   }
-  .btn-primary:hover{filter:brightness(1.06);}
-  .btn-sm{padding:7px 14px;font-size:0.78rem;}
-  .menu-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:var(--radius);width:38px;height:38px;color:var(--ink);cursor:pointer;}
+  .btn-primary:hover{filter:brightness(1.12);}
+  .btn-sm{min-height:40px;padding:8px 16px;font-size:0.78rem;}
+  .menu-toggle{
+    display:none;align-items:center;justify-content:center;
+    background:none;border:1px solid var(--line-strong);border-radius:var(--radius);
+    width:44px;height:44px;color:var(--ink);cursor:pointer;font-size:1.1rem;
+  }
 
   /* --- hero --- */
   .hero{
@@ -191,7 +223,13 @@
   .service-card{
     background:var(--bg-elevated);padding:32px 26px;display:flex;flex-direction:column;gap:14px;
   }
-  .service-card .idx{font-family:'Suez One',serif;font-size:2.1rem;color:var(--steel-soft);-webkit-text-stroke:1px var(--steel);color:transparent;}
+  .service-card .idx{
+    font-family:'Suez One',serif;font-size:2.1rem;
+    color:var(--steel-soft);
+  }
+  @supports (-webkit-text-stroke: 1px black){
+    .service-card .idx{color:transparent;-webkit-text-stroke:1px var(--steel);}
+  }
   .service-card h3{font-size:1.25rem;margin:0;color:var(--ink);}
   .service-card p{margin:0;color:var(--ink-soft);font-size:0.95rem;}
   .service-card .tag{
@@ -235,13 +273,13 @@
     width:38px;height:38px;flex:none;border-radius:var(--radius);background:var(--steel-soft);
     display:flex;align-items:center;justify-content:center;color:var(--steel);
   }
-  .contact-row a{text-decoration:none;color:var(--ink);font-weight:600;}
+  .contact-row a{text-decoration:none;color:var(--ink);font-weight:600;display:inline-block;padding-block:4px;}
   .contact-row .lbl{font-size:0.78rem;color:var(--ink-faint);display:block;}
   form.compose{display:grid;gap:14px;}
   .field{display:grid;gap:6px;}
   .field label{font-size:0.82rem;color:var(--ink-soft);}
   .field input, .field textarea{
-    font-family:'Heebo',sans-serif;font-size:0.95rem;
+    font-family:'Heebo',sans-serif;font-size:1rem;
     padding:11px 12px;border-radius:var(--radius);border:1px solid var(--line-strong);
     background:var(--bg-elevated);color:var(--ink);
   }
@@ -266,6 +304,14 @@
     padding:3px 10px;border-radius:999px;width:fit-content;
   }
 
+  /* --- accessibility statement --- */
+  .a11y-list{margin:0;padding-inline-start:20px;color:var(--ink-soft);display:grid;gap:8px;}
+  .a11y-contact{
+    margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--bg-elevated);font-size:0.94rem;color:var(--ink-soft);
+  }
+  .a11y-contact a{color:var(--ink);font-weight:600;text-decoration:underline;}
+
   /* --- modal --- */
   .modal-backdrop{
     position:fixed;inset:0;background:rgba(10,12,14,.55);display:none;
@@ -279,7 +325,11 @@
   }
   .modal-head{display:flex;justify-content:space-between;align-items:center;}
   .modal-head h3{margin:0;font-size:1.1rem;}
-  .modal-close{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:1.2rem;line-height:1;}
+  .modal-close{
+    background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:1.2rem;line-height:1;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius);
+  }
+  .modal-close:hover{color:var(--ink);}
   .modal .field input{width:100%;}
   .modal-msg{
     font-size:0.85rem;color:var(--steel);background:var(--steel-soft);
@@ -294,29 +344,54 @@
   }
   .footer-block h4{margin:0 0 8px;font-size:0.95rem;}
   .footer-block p, .footer-block a{margin:0 0 4px;font-size:0.86rem;color:var(--ink-soft);text-decoration:none;}
+  .footer-block a{display:inline-block;padding-block:2px;}
   .footer-note{
     margin-top:16px;font-size:0.8rem;color:var(--ink-faint);text-align:center;
   }
 
   @media (max-width:860px){
-    nav.main-nav{display:none;}
-    .menu-toggle{display:inline-flex;align-items:center;justify-content:center;}
+    nav.main-nav{
+      display:none;
+      position:absolute;inset-inline-end:24px;top:64px;
+      flex-direction:column;align-items:stretch;gap:2px;
+      background:var(--bg-elevated);border:1px solid var(--line);
+      padding:10px;border-radius:var(--radius);box-shadow:var(--shadow);z-index:50;
+      min-width:180px;
+    }
+    nav.main-nav.nav-open{display:flex;}
+    nav.main-nav a{padding:10px 8px;border-bottom:none;}
+    .menu-toggle{display:inline-flex;}
     .services-grid{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);}
     .about-wrap,.contact-grid,.portal-grid{grid-template-columns:1fr;}
     .footer-block{grid-template-columns:1fr;}
+  }
+  @media (max-width:600px){
+    section{padding-block:48px;}
+    .hero-inner{padding-block:52px 40px;}
+    .hero-meta{gap:20px;}
+    .contact-card{padding:20px;}
+    .footer-block{padding:20px;}
+    .modal{padding:22px;}
+  }
+  @media (max-width:480px){
+    .wordmark small{display:block;}
+    .gallery-grid{grid-template-columns:1fr;}
+    .hero-ctas{flex-direction:column;align-items:stretch;}
+    .hero-ctas .btn{width:100%;}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition:none !important;}
   }
 </style>
+</head>
+<body>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@300;400;500;600;700&display=swap">
+<a class="skip-link" href="#main-content">דלג לתוכן המרכזי</a>
 
 <div class="topbar">
   <div class="container topbar-row">
     <div class="wordmark">רון טבקמן הנדסה <small>חרטוט · ריתוך · הנדסה</small></div>
-    <nav class="main-nav">
+    <nav class="main-nav" id="mainNav" aria-label="ניווט ראשי">
       <a href="#hero">בית</a>
       <a href="#services">שירותים</a>
       <a href="#gallery">גלריה</a>
@@ -326,12 +401,12 @@
     <div class="portal-btns">
       <a class="btn btn-ghost btn-sm" href="#portal" data-portal="customer">כניסת לקוחות</a>
       <a class="btn btn-ghost btn-sm" href="#portal" data-portal="employee">כניסת עובדים</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="תפריט">☰</button>
+      <button class="menu-toggle" id="menuToggle" aria-label="פתיחת תפריט ניווט" aria-expanded="false" aria-controls="mainNav">☰</button>
     </div>
   </div>
 </div>
 
-<main>
+<main id="main-content">
   <section class="hero" id="hero" style="border-bottom:1px solid var(--line);">
     <div class="spark" aria-hidden="true"></div>
     <div class="container hero-inner">
@@ -361,19 +436,19 @@
       </div>
       <div class="services-grid">
         <div class="service-card">
-          <span class="idx">01</span>
+          <span class="idx" aria-hidden="true">01</span>
           <h3>חרטוט</h3>
           <p>עיבוד שבבי מדויק על מחרטה — ייצור וחידוש חלקים לפי מידה, לפי דוגמה או לפי שרטוט, עם דגש על סבילות הידוק וחזרתיות.</p>
           <span class="tag">עבודה לפי מידה</span>
         </div>
         <div class="service-card">
-          <span class="idx">02</span>
+          <span class="idx" aria-hidden="true">02</span>
           <h3>ריתוך</h3>
           <p>ריתוך פלדה, אלומיניום ונירוסטה — בניית מסגרות ומבנים, תיקוני שבר ושחיקה, והתאמת חלקים למערכות קיימות.</p>
           <span class="tag">פלדה · אלומיניום · נירוסטה</span>
         </div>
         <div class="service-card">
-          <span class="idx">03</span>
+          <span class="idx" aria-hidden="true">03</span>
           <h3>הנדסה</h3>
           <p>ליווי הנדסי לפתרונות מכניים — מהגדרת הצורך, דרך תכנון ואבטיפוס, ועד ייצור סדרתי ותחזוקה שוטפת.</p>
           <span class="tag">תכנון עד ייצור</span>
@@ -392,12 +467,12 @@
         </div>
       </div>
       <div class="gallery-grid">
-        <div class="gallery-tile"><span>חרטוט — בקרוב</span></div>
-        <div class="gallery-tile"><span>ריתוך — בקרוב</span></div>
-        <div class="gallery-tile"><span>הנדסה — בקרוב</span></div>
-        <div class="gallery-tile"><span>חרטוט — בקרוב</span></div>
-        <div class="gallery-tile"><span>ריתוך — בקרוב</span></div>
-        <div class="gallery-tile"><span>הנדסה — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת חרטוט — תמונה תתווסף בקרוב"><span aria-hidden="true">חרטוט — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת ריתוך — תמונה תתווסף בקרוב"><span aria-hidden="true">ריתוך — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת הנדסה — תמונה תתווסף בקרוב"><span aria-hidden="true">הנדסה — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת חרטוט — תמונה תתווסף בקרוב"><span aria-hidden="true">חרטוט — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת ריתוך — תמונה תתווסף בקרוב"><span aria-hidden="true">ריתוך — בקרוב</span></div>
+        <div class="gallery-tile" role="img" aria-label="דוגמת עבודת הנדסה — תמונה תתווסף בקרוב"><span aria-hidden="true">הנדסה — בקרוב</span></div>
       </div>
       <p class="gallery-note">שולחים תמונות ולוגו ואנחנו נטמיע אותם כאן במקום התצוגה הזמנית.</p>
     </div>
@@ -429,47 +504,56 @@
   </section>
 
   <section id="contact">
-    <div class="container contact-grid">
-      <div class="contact-card">
-        <div class="contact-row">
-          <span class="ic">☎</span>
-          <div><span class="lbl">טלפון</span><a href="tel:0509131402">050-913-1402</a></div>
-        </div>
-        <div class="contact-row">
-          <span class="ic">✎</span>
-          <div><span class="lbl">WhatsApp</span><a href="https://wa.me/972509131402" target="_blank" rel="noopener">שליחת הודעה</a></div>
-        </div>
-        <div class="contact-row">
-          <span class="ic">⌂</span>
-          <div><span class="lbl">כתובת</span><span>קיבוץ העוגן</span></div>
-        </div>
-      </div>
-      <div class="contact-card">
+    <div class="container">
+      <div class="title-block">
         <div>
           <span class="code">§ 06</span>
-          <h3 style="font-family:'Suez One',serif;font-weight:400;margin:8px 0 4px;">השאירו פרטים</h3>
-          <p class="compose-hint">מילוי הטופס פותח הודעת WhatsApp מוכנה עם הפרטים שלכם, ישירות אלינו.</p>
+          <h2>יצירת קשר</h2>
+          <p class="sub">טלפון, WhatsApp או טופס קצר — כל דרך מגיעה ישירות אלינו.</p>
         </div>
-        <form class="compose" id="composeForm">
-          <div class="field">
-            <label for="cName">שם מלא</label>
-            <input id="cName" type="text" required placeholder="איך קוראים לך?">
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3 class="visually-hidden">פרטי התקשרות</h3>
+          <div class="contact-row">
+            <span class="ic" aria-hidden="true">☎</span>
+            <div><span class="lbl">טלפון</span><a href="tel:0509131402">050-913-1402</a></div>
           </div>
-          <div class="field">
-            <label for="cPhone">טלפון לחזרה</label>
-            <input id="cPhone" type="tel" required placeholder="05X-XXXXXXX">
+          <div class="contact-row">
+            <span class="ic" aria-hidden="true">✎</span>
+            <div><span class="lbl">WhatsApp</span><a href="https://wa.me/972509131402" target="_blank" rel="noopener">שליחת הודעה</a></div>
           </div>
-          <div class="field">
-            <label for="cMsg">מה צריך?</label>
-            <textarea id="cMsg" placeholder="תיאור קצר של העבודה"></textarea>
+          <div class="contact-row">
+            <span class="ic" aria-hidden="true">⌂</span>
+            <div><span class="lbl">כתובת</span><span>קיבוץ העוגן</span></div>
           </div>
-          <button class="btn btn-primary" type="submit">שליחה ב-WhatsApp</button>
-        </form>
+        </div>
+        <div class="contact-card">
+          <div>
+            <h3 style="font-family:'Suez One',serif;font-weight:400;margin:0 0 4px;">השאירו פרטים</h3>
+            <p class="compose-hint">מילוי הטופס פותח הודעת WhatsApp מוכנה עם הפרטים שלכם, ישירות אלינו.</p>
+          </div>
+          <form class="compose" id="composeForm">
+            <div class="field">
+              <label for="cName">שם מלא</label>
+              <input id="cName" type="text" required placeholder="איך קוראים לך?">
+            </div>
+            <div class="field">
+              <label for="cPhone">טלפון לחזרה</label>
+              <input id="cPhone" type="tel" required placeholder="05X-XXXXXXX">
+            </div>
+            <div class="field">
+              <label for="cMsg">מה צריך?</label>
+              <textarea id="cMsg" placeholder="תיאור קצר של העבודה"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">שליחה ב-WhatsApp</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="portal" style="border-bottom:none;">
+  <section id="portal">
     <div class="container">
       <div class="title-block">
         <div>
@@ -480,19 +564,42 @@
       </div>
       <div class="portal-grid">
         <div class="portal-card">
-          <span class="ic">◧</span>
+          <span class="ic" aria-hidden="true">◧</span>
           <h3>כניסת לקוחות</h3>
           <p>מעקב אחר סטטוס עבודה, היסטוריית הזמנות וחשבוניות — לכשיופעל.</p>
           <span class="status-pill">בפיתוח</span>
-          <button class="btn btn-ghost btn-sm" style="margin-top:6px;" data-open-portal="customer">תצוגה מקדימה</button>
+          <button class="btn btn-ghost btn-sm" type="button" style="margin-top:6px;" data-open-portal="customer">תצוגה מקדימה</button>
         </div>
         <div class="portal-card">
-          <span class="ic">◨</span>
+          <span class="ic" aria-hidden="true">◨</span>
           <h3>כניסת עובדים</h3>
           <p>ניהול משימות, שעות עבודה ותיעוד עבודות — לכשיופעל.</p>
           <span class="status-pill">בפיתוח</span>
-          <button class="btn btn-ghost btn-sm" style="margin-top:6px;" data-open-portal="employee">תצוגה מקדימה</button>
+          <button class="btn btn-ghost btn-sm" type="button" style="margin-top:6px;" data-open-portal="employee">תצוגה מקדימה</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="accessibility" style="border-bottom:none;">
+    <div class="container">
+      <div class="title-block">
+        <div>
+          <span class="code">§ 08</span>
+          <h2>הצהרת נגישות</h2>
+          <p class="sub">האתר של רון טבקמן הנדסה שואף לאפשר שימוש נוח ושוויוני לכלל המשתמשים, כולל אנשים עם מוגבלות.</p>
+        </div>
+      </div>
+      <ul class="a11y-list">
+        <li>האתר נבנה תוך התייחסות לדרישות תקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013, ובהתבסס על המלצות התקן הישראלי ת"י 5568 (רמת AA), המבוסס על WCAG 2.0.</li>
+        <li>בין ההתאמות שבוצעו: מבנה עמוד סמנטי ותמיכה בקוראי מסך, ניווט מלא במקלדת, ניגודיות צבעים מותאמת, התאמה לכיווניות עברית (RTL), והתאמה לתצוגה במגוון גדלי מסך כולל טלפון נייד.</li>
+        <li>האתר נמצא בתהליך שיפור מתמשך, וייתכן שחלקים בו טרם עומדים באופן מלא בכל הדרישות.</li>
+      </ul>
+      <div class="a11y-contact">
+        נתקלתם בבעיית נגישות באתר? נשמח לתקן — ניתן לפנות אלינו בטלפון
+        <a href="tel:0509131402">050-913-1402</a>
+        או בהודעת <a href="https://wa.me/972509131402" target="_blank" rel="noopener">WhatsApp</a>.
+        עודכן לאחרונה: אוגוסט 2026.
       </div>
     </div>
   </section>
@@ -511,24 +618,25 @@
         <a href="tel:0509131402">050-913-1402</a>
         <a href="https://wa.me/972509131402" target="_blank" rel="noopener">WhatsApp</a>
       </div>
-      <div>
+      <nav aria-label="ניווט בתחתית העמוד">
         <h4>ניווט</h4>
         <a href="#services">שירותים</a>
         <a href="#gallery">גלריה</a>
         <a href="#contact">יצירת קשר</a>
-      </div>
+        <a href="#accessibility">הצהרת נגישות</a>
+      </nav>
     </div>
     <p class="footer-note">האתר נמצא בבנייה מתמשכת — תמונות, לוגו, ולאחר מכן התחברות פעילה, תשלומים וניהול חשבוניות יתווספו בהמשך.</p>
   </div>
 </footer>
 
 <div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
       <h3 id="modalTitle">כניסת לקוחות</h3>
       <button class="modal-close" id="modalClose" aria-label="סגירה">✕</button>
     </div>
-    <div class="modal-msg" id="modalMsg">האזור בבנייה — ההתחברות תופעל בשלב הבא של האתר.</div>
+    <div class="modal-msg" id="modalMsg" role="status" aria-live="polite">האזור בבנייה — ההתחברות תופעל בשלב הבא של האתר.</div>
     <form id="modalForm">
       <div class="field" style="margin-bottom:12px;">
         <label for="loginUser">שם משתמש / טלפון</label>
@@ -549,29 +657,50 @@
     var modalTitle = document.getElementById('modalTitle');
     var modalMsg = document.getElementById('modalMsg');
     var modalForm = document.getElementById('modalForm');
+    var modalClose = document.getElementById('modalClose');
+    var lastFocusedEl = null;
 
-    function openPortal(kind){
+    function getFocusable(){
+      return backdrop.querySelectorAll('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    }
+    function trapFocus(e){
+      if(e.key !== 'Tab') return;
+      var focusables = getFocusable();
+      if(!focusables.length) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+
+    function openPortal(kind, triggerEl){
+      lastFocusedEl = triggerEl || document.activeElement;
       modalTitle.textContent = kind === 'employee' ? 'כניסת עובדים' : 'כניסת לקוחות';
       modalMsg.classList.remove('show');
       backdrop.classList.add('open');
+      document.getElementById('loginUser').focus();
+      document.addEventListener('keydown', trapFocus);
     }
-    function closePortal(){ backdrop.classList.remove('open'); }
+    function closePortal(){
+      if(!backdrop.classList.contains('open')) return;
+      backdrop.classList.remove('open');
+      document.removeEventListener('keydown', trapFocus);
+      if(lastFocusedEl && typeof lastFocusedEl.focus === 'function'){ lastFocusedEl.focus(); }
+    }
 
     document.querySelectorAll('[data-open-portal]').forEach(function(btn){
       btn.addEventListener('click', function(e){
         e.preventDefault();
-        openPortal(btn.getAttribute('data-open-portal'));
+        openPortal(btn.getAttribute('data-open-portal'), btn);
       });
     });
     document.querySelectorAll('[data-portal]').forEach(function(btn){
       btn.addEventListener('click', function(e){
         e.preventDefault();
-        openPortal(btn.getAttribute('data-portal'));
+        openPortal(btn.getAttribute('data-portal'), btn);
       });
     });
-    document.getElementById('modalClose').addEventListener('click', closePortal);
+    modalClose.addEventListener('click', closePortal);
     backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closePortal(); });
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePortal(); });
 
     modalForm.addEventListener('submit', function(e){
       e.preventDefault();
@@ -590,20 +719,29 @@
     });
 
     var menuToggle = document.getElementById('menuToggle');
-    var mainNav = document.querySelector('.main-nav');
-    menuToggle.addEventListener('click', function(){
-      var isOpen = mainNav.style.display === 'flex';
-      mainNav.style.display = isOpen ? 'none' : 'flex';
-      mainNav.style.flexDirection = 'column';
-      mainNav.style.position='absolute';
-      mainNav.style.insetInlineEnd='24px';
-      mainNav.style.top='58px';
-      mainNav.style.background='var(--bg-elevated)';
-      mainNav.style.border='1px solid var(--line)';
-      mainNav.style.padding='14px 18px';
-      mainNav.style.borderRadius='2px';
-      mainNav.style.boxShadow='var(--shadow)';
-      mainNav.style.zIndex='50';
+    var mainNav = document.getElementById('mainNav');
+
+    function closeNav(){
+      mainNav.classList.remove('nav-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function toggleNav(){
+      var isOpen = mainNav.classList.toggle('nav-open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    menuToggle.addEventListener('click', toggleNav);
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('click', function(e){
+      if(mainNav.classList.contains('nav-open') && !mainNav.contains(e.target) && e.target !== menuToggle){
+        closeNav();
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ closeNav(); closePortal(); }
     });
   })();
 </script>
+</body>
+</html>
