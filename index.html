@@ -1,0 +1,609 @@
+<title>רון טבקמן הנדסה</title>
+<style>
+  :root{
+    --bg:#EEF1F3;
+    --bg-elevated:#FFFFFF;
+    --ink:#171B20;
+    --ink-soft:#4B535C;
+    --ink-faint:#7A828B;
+    --line:#C7CDD3;
+    --line-strong:#9CA6AF;
+    --accent:#D9611B;
+    --accent-ink:#7A3200;
+    --accent-soft:#F3D9C4;
+    --steel:#3E5C76;
+    --steel-soft:#DCE4EA;
+    --shadow: 0 12px 32px -16px rgba(23,27,32,0.35);
+    --radius: 2px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181C;
+      --bg-elevated:#1C2126;
+      --ink:#EDEFF1;
+      --ink-soft:#ABB4BC;
+      --ink-faint:#7A828B;
+      --line:#333A41;
+      --line-strong:#454E56;
+      --accent:#FF8A3D;
+      --accent-ink:#FFD9B8;
+      --accent-soft:#3A2416;
+      --steel:#8FB2D1;
+      --steel-soft:#223140;
+      --shadow: 0 12px 32px -16px rgba(0,0,0,0.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181C;
+    --bg-elevated:#1C2126;
+    --ink:#EDEFF1;
+    --ink-soft:#ABB4BC;
+    --ink-faint:#7A828B;
+    --line:#333A41;
+    --line-strong:#454E56;
+    --accent:#FF8A3D;
+    --accent-ink:#FFD9B8;
+    --accent-soft:#3A2416;
+    --steel:#8FB2D1;
+    --steel-soft:#223140;
+    --shadow: 0 12px 32px -16px rgba(0,0,0,0.6);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html{direction:rtl;}
+  body{
+    direction:rtl;
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Heebo',system-ui,-apple-system,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.wordmark{
+    font-family:'Suez One','Heebo',serif;
+    font-weight:400;
+    text-wrap:balance;
+    letter-spacing:0.01em;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .container{
+    width:100%;
+    max-width:1120px;
+    margin-inline:auto;
+    padding-inline:24px;
+  }
+  ::selection{background:var(--accent);color:#fff;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+  /* --- topbar --- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-row{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;padding-block:14px;
+  }
+  .wordmark{
+    font-size:1.15rem;
+    display:flex;align-items:baseline;gap:8px;
+    white-space:nowrap;
+  }
+  .wordmark small{
+    font-family:'Heebo',sans-serif;
+    font-size:0.6rem;
+    color:var(--ink-faint);
+    letter-spacing:0.12em;
+  }
+  nav.main-nav{display:flex;gap:26px;align-items:center;}
+  nav.main-nav a{
+    font-size:0.92rem;color:var(--ink-soft);text-decoration:none;
+    padding-block:4px;border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.main-nav a:hover{color:var(--ink);border-color:var(--accent);}
+  .portal-btns{display:flex;gap:10px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Heebo',sans-serif;font-size:0.86rem;font-weight:600;
+    padding:9px 18px;border-radius:var(--radius);
+    border:1px solid var(--line-strong);background:transparent;color:var(--ink);
+    cursor:pointer;text-decoration:none;white-space:nowrap;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover{border-color:var(--accent);transform:translateY(-1px);}
+  .btn-ghost{border-color:transparent;background:var(--steel-soft);color:var(--steel);}
+  .btn-primary{
+    background:var(--accent);border-color:var(--accent);color:#fff;
+  }
+  .btn-primary:hover{filter:brightness(1.06);}
+  .btn-sm{padding:7px 14px;font-size:0.78rem;}
+  .menu-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:var(--radius);width:38px;height:38px;color:var(--ink);cursor:pointer;}
+
+  /* --- hero --- */
+  .hero{
+    position:relative;overflow:hidden;
+    border-bottom:1px solid var(--line);
+    background:
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--steel) 10%, transparent) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--steel) 10%, transparent) 0 1px, transparent 1px 64px),
+      var(--bg);
+  }
+  .hero-inner{
+    position:relative;z-index:1;
+    padding-block:88px 72px;
+    display:grid;gap:28px;
+    max-width:760px;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:0.78rem;letter-spacing:0.14em;color:var(--steel);
+    font-family:'Heebo',sans-serif;font-weight:600;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);display:inline-block;}
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    line-height:1.18;color:var(--ink);margin:0;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--accent-ink);
+    background:linear-gradient(transparent 62%, var(--accent-soft) 0);
+  }
+  .hero p{
+    font-size:1.08rem;color:var(--ink-soft);max-width:52ch;margin:0;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;}
+  .hero-meta{
+    display:flex;gap:28px;flex-wrap:wrap;margin-top:18px;
+    padding-top:22px;border-top:1px solid var(--line);
+  }
+  .hero-meta div{display:flex;flex-direction:column;gap:2px;}
+  .hero-meta .num{font-family:'Suez One',serif;font-size:1.5rem;color:var(--steel);}
+  .hero-meta .lbl{font-size:0.78rem;color:var(--ink-faint);}
+  .spark{
+    position:absolute;left:-6%;top:-10%;width:520px;height:520px;
+    background:radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 68%);
+    pointer-events:none;
+  }
+
+  /* --- section framing (title block, like a drawing frame) --- */
+  section{padding-block:76px;border-bottom:1px solid var(--line);}
+  .title-block{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:24px;margin-bottom:42px;flex-wrap:wrap;
+  }
+  .title-block .code{
+    font-family:'Suez One',serif;font-size:0.85rem;color:var(--ink-faint);
+    border:1px solid var(--line-strong);padding:4px 10px;border-radius:var(--radius);
+  }
+  .title-block h2{font-size:clamp(1.6rem,3vw,2.3rem);margin:6px 0 0;color:var(--ink);}
+  .title-block .sub{color:var(--ink-soft);max-width:48ch;margin-top:8px;font-size:0.98rem;}
+
+  /* --- services --- */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .service-card{
+    background:var(--bg-elevated);padding:32px 26px;display:flex;flex-direction:column;gap:14px;
+  }
+  .service-card .idx{font-family:'Suez One',serif;font-size:2.1rem;color:var(--steel-soft);-webkit-text-stroke:1px var(--steel);color:transparent;}
+  .service-card h3{font-size:1.25rem;margin:0;color:var(--ink);}
+  .service-card p{margin:0;color:var(--ink-soft);font-size:0.95rem;}
+  .service-card .tag{
+    margin-top:auto;font-size:0.76rem;color:var(--accent-ink);
+    background:var(--accent-soft);display:inline-block;padding:4px 10px;border-radius:var(--radius);width:fit-content;
+  }
+
+  /* --- gallery --- */
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .gallery-tile{
+    aspect-ratio:4/3;border-radius:var(--radius);position:relative;overflow:hidden;
+    border:1px solid var(--line);
+    background:
+      repeating-linear-gradient(45deg, color-mix(in srgb, var(--steel) 16%, var(--bg-elevated)) 0 14px, var(--bg-elevated) 14px 28px);
+    display:flex;align-items:flex-end;
+  }
+  .gallery-tile span{
+    display:block;width:100%;padding:10px 14px;font-size:0.82rem;color:#fff;
+    background:linear-gradient(to top, rgba(0,0,0,.62), transparent);
+  }
+  .gallery-note{margin-top:18px;color:var(--ink-faint);font-size:0.88rem;}
+
+  /* --- about --- */
+  .about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .about-wrap p{color:var(--ink-soft);font-size:1.02rem;margin:0 0 14px;}
+  .about-facts{display:grid;gap:16px;}
+  .fact{
+    border-inline-start:2px solid var(--accent);padding-inline-start:16px;
+  }
+  .fact h4{margin:0 0 4px;font-size:0.98rem;color:var(--ink);}
+  .fact p{margin:0;font-size:0.88rem;color:var(--ink-faint);}
+
+  /* --- contact --- */
+  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;}
+  .contact-card{
+    background:var(--bg-elevated);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;display:flex;flex-direction:column;gap:18px;
+  }
+  .contact-row{display:flex;align-items:center;gap:14px;}
+  .contact-row .ic{
+    width:38px;height:38px;flex:none;border-radius:var(--radius);background:var(--steel-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--steel);
+  }
+  .contact-row a{text-decoration:none;color:var(--ink);font-weight:600;}
+  .contact-row .lbl{font-size:0.78rem;color:var(--ink-faint);display:block;}
+  form.compose{display:grid;gap:14px;}
+  .field{display:grid;gap:6px;}
+  .field label{font-size:0.82rem;color:var(--ink-soft);}
+  .field input, .field textarea{
+    font-family:'Heebo',sans-serif;font-size:0.95rem;
+    padding:11px 12px;border-radius:var(--radius);border:1px solid var(--line-strong);
+    background:var(--bg-elevated);color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:100px;}
+  .field input:focus,.field textarea:focus{border-color:var(--accent);}
+  .compose-hint{font-size:0.8rem;color:var(--ink-faint);margin-top:-4px;}
+
+  /* --- portal / login areas --- */
+  .portal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .portal-card{
+    background:var(--bg-elevated);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;display:flex;flex-direction:column;gap:12px;
+  }
+  .portal-card .ic{
+    width:44px;height:44px;border-radius:var(--radius);background:var(--steel-soft);color:var(--steel);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .portal-card h3{margin:0;font-size:1.15rem;}
+  .portal-card p{margin:0;color:var(--ink-soft);font-size:0.92rem;}
+  .status-pill{
+    font-size:0.74rem;color:var(--accent-ink);background:var(--accent-soft);
+    padding:3px 10px;border-radius:999px;width:fit-content;
+  }
+
+  /* --- modal --- */
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(10,12,14,.55);display:none;
+    align-items:center;justify-content:center;padding:20px;z-index:100;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal{
+    background:var(--bg-elevated);border:1px solid var(--line);border-radius:var(--radius);
+    width:100%;max-width:400px;padding:28px;box-shadow:var(--shadow);
+    display:grid;gap:16px;
+  }
+  .modal-head{display:flex;justify-content:space-between;align-items:center;}
+  .modal-head h3{margin:0;font-size:1.1rem;}
+  .modal-close{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:1.2rem;line-height:1;}
+  .modal .field input{width:100%;}
+  .modal-msg{
+    font-size:0.85rem;color:var(--steel);background:var(--steel-soft);
+    padding:10px 12px;border-radius:var(--radius);display:none;
+  }
+  .modal-msg.show{display:block;}
+
+  footer{padding-block:40px;}
+  .footer-block{
+    border:1px solid var(--line-strong);border-radius:var(--radius);
+    display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:24px;padding:26px 28px;
+  }
+  .footer-block h4{margin:0 0 8px;font-size:0.95rem;}
+  .footer-block p, .footer-block a{margin:0 0 4px;font-size:0.86rem;color:var(--ink-soft);text-decoration:none;}
+  .footer-note{
+    margin-top:16px;font-size:0.8rem;color:var(--ink-faint);text-align:center;
+  }
+
+  @media (max-width:860px){
+    nav.main-nav{display:none;}
+    .menu-toggle{display:inline-flex;align-items:center;justify-content:center;}
+    .services-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .about-wrap,.contact-grid,.portal-grid{grid-template-columns:1fr;}
+    .footer-block{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@300;400;500;600;700&display=swap">
+
+<div class="topbar">
+  <div class="container topbar-row">
+    <div class="wordmark">רון טבקמן הנדסה <small>חרטוט · ריתוך · הנדסה</small></div>
+    <nav class="main-nav">
+      <a href="#hero">בית</a>
+      <a href="#services">שירותים</a>
+      <a href="#gallery">גלריה</a>
+      <a href="#about">אודות</a>
+      <a href="#contact">יצירת קשר</a>
+    </nav>
+    <div class="portal-btns">
+      <a class="btn btn-ghost btn-sm" href="#portal" data-portal="customer">כניסת לקוחות</a>
+      <a class="btn btn-ghost btn-sm" href="#portal" data-portal="employee">כניסת עובדים</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="תפריט">☰</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="hero" id="hero" style="border-bottom:1px solid var(--line);">
+    <div class="spark" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="eyebrow">בית מלאכה טכני · קיבוץ העוגן</span>
+      <h1>מה<em>שרטוט</em> לפלדה המדויקת</h1>
+      <p>רון טבקמן הנדסה מספקת עבודות חרטוט, ריתוך והנדסה מכנית — מתיקון נקודתי ועד תכנון וייצור פתרון מלא, בדיוק ובזמינות שהעבודה דורשת.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="tel:0509131402">התקשרו: 050-913-1402</a>
+        <a class="btn btn-ghost" href="https://wa.me/972509131402" target="_blank" rel="noopener">שלחו הודעת WhatsApp</a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="num">03</span><span class="lbl">תחומי עבודה</span></div>
+        <div><span class="num">1:1</span><span class="lbl">התאמה לפי מידה ודוגמה</span></div>
+        <div><span class="num">HaOgen</span><span class="lbl">קיבוץ העוגן</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="title-block">
+        <div>
+          <span class="code">§ 01–03</span>
+          <h2>שירותים</h2>
+          <p class="sub">שלושה תחומי ליבה, מהתכנון על הנייר ועד החלק המוגמר.</p>
+        </div>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="idx">01</span>
+          <h3>חרטוט</h3>
+          <p>עיבוד שבבי מדויק על מחרטה — ייצור וחידוש חלקים לפי מידה, לפי דוגמה או לפי שרטוט, עם דגש על סבילות הידוק וחזרתיות.</p>
+          <span class="tag">עבודה לפי מידה</span>
+        </div>
+        <div class="service-card">
+          <span class="idx">02</span>
+          <h3>ריתוך</h3>
+          <p>ריתוך פלדה, אלומיניום ונירוסטה — בניית מסגרות ומבנים, תיקוני שבר ושחיקה, והתאמת חלקים למערכות קיימות.</p>
+          <span class="tag">פלדה · אלומיניום · נירוסטה</span>
+        </div>
+        <div class="service-card">
+          <span class="idx">03</span>
+          <h3>הנדסה</h3>
+          <p>ליווי הנדסי לפתרונות מכניים — מהגדרת הצורך, דרך תכנון ואבטיפוס, ועד ייצור סדרתי ותחזוקה שוטפת.</p>
+          <span class="tag">תכנון עד ייצור</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="container">
+      <div class="title-block">
+        <div>
+          <span class="code">§ 04</span>
+          <h2>גלריה</h2>
+          <p class="sub">מבחר עבודות יעלה כאן בקרוב — תמונות מהסדנה ומהפרויקטים בדרך.</p>
+        </div>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-tile"><span>חרטוט — בקרוב</span></div>
+        <div class="gallery-tile"><span>ריתוך — בקרוב</span></div>
+        <div class="gallery-tile"><span>הנדסה — בקרוב</span></div>
+        <div class="gallery-tile"><span>חרטוט — בקרוב</span></div>
+        <div class="gallery-tile"><span>ריתוך — בקרוב</span></div>
+        <div class="gallery-tile"><span>הנדסה — בקרוב</span></div>
+      </div>
+      <p class="gallery-note">שולחים תמונות ולוגו ואנחנו נטמיע אותם כאן במקום התצוגה הזמנית.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container about-wrap">
+      <div>
+        <span class="code">§ 05</span>
+        <h2 style="margin-top:6px;">אודות</h2>
+        <p style="margin-top:16px;">רון טבקמן הנדסה הוא בית מלאכה טכני הפועל מקיבוץ העוגן, ומעניק שירותי חרטוט, ריתוך והנדסה מכנית ללקוחות פרטיים, חקלאיים ותעשייתיים באזור.</p>
+        <p>כל עבודה — קטנה כגדולה — מלווה מקרוב, מהבנת הצורך ועד מסירת החלק המוגמר, עם זמינות גבוהה וגישה ישירה.</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact">
+          <h4>עבודה לפי מידה</h4>
+          <p>ייצור וחזרה על חלקים לפי דוגמה, שרטוט או מידות שנמסרות בשטח.</p>
+        </div>
+        <div class="fact">
+          <h4>טווח שירות רחב</h4>
+          <p>מתיקון נקודתי בסדנה ועד ליווי הנדסי מלא לפרויקט.</p>
+        </div>
+        <div class="fact">
+          <h4>קרבה ללקוח</h4>
+          <p>תקשורת ישירה בטלפון או ב-WhatsApp, ותיאום מהיר מול הסדנה בקיבוץ העוגן.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container contact-grid">
+      <div class="contact-card">
+        <div class="contact-row">
+          <span class="ic">☎</span>
+          <div><span class="lbl">טלפון</span><a href="tel:0509131402">050-913-1402</a></div>
+        </div>
+        <div class="contact-row">
+          <span class="ic">✎</span>
+          <div><span class="lbl">WhatsApp</span><a href="https://wa.me/972509131402" target="_blank" rel="noopener">שליחת הודעה</a></div>
+        </div>
+        <div class="contact-row">
+          <span class="ic">⌂</span>
+          <div><span class="lbl">כתובת</span><span>קיבוץ העוגן</span></div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div>
+          <span class="code">§ 06</span>
+          <h3 style="font-family:'Suez One',serif;font-weight:400;margin:8px 0 4px;">השאירו פרטים</h3>
+          <p class="compose-hint">מילוי הטופס פותח הודעת WhatsApp מוכנה עם הפרטים שלכם, ישירות אלינו.</p>
+        </div>
+        <form class="compose" id="composeForm">
+          <div class="field">
+            <label for="cName">שם מלא</label>
+            <input id="cName" type="text" required placeholder="איך קוראים לך?">
+          </div>
+          <div class="field">
+            <label for="cPhone">טלפון לחזרה</label>
+            <input id="cPhone" type="tel" required placeholder="05X-XXXXXXX">
+          </div>
+          <div class="field">
+            <label for="cMsg">מה צריך?</label>
+            <textarea id="cMsg" placeholder="תיאור קצר של העבודה"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">שליחה ב-WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="portal" style="border-bottom:none;">
+    <div class="container">
+      <div class="title-block">
+        <div>
+          <span class="code">§ 07</span>
+          <h2>אזורים אישיים</h2>
+          <p class="sub">תצוגה ראשונית של אזור הלקוחות והעובדים. התחברות פעילה, מעקב הזמנות וחשבוניות יתווספו בשלב הבא.</p>
+        </div>
+      </div>
+      <div class="portal-grid">
+        <div class="portal-card">
+          <span class="ic">◧</span>
+          <h3>כניסת לקוחות</h3>
+          <p>מעקב אחר סטטוס עבודה, היסטוריית הזמנות וחשבוניות — לכשיופעל.</p>
+          <span class="status-pill">בפיתוח</span>
+          <button class="btn btn-ghost btn-sm" style="margin-top:6px;" data-open-portal="customer">תצוגה מקדימה</button>
+        </div>
+        <div class="portal-card">
+          <span class="ic">◨</span>
+          <h3>כניסת עובדים</h3>
+          <p>ניהול משימות, שעות עבודה ותיעוד עבודות — לכשיופעל.</p>
+          <span class="status-pill">בפיתוח</span>
+          <button class="btn btn-ghost btn-sm" style="margin-top:6px;" data-open-portal="employee">תצוגה מקדימה</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-block">
+      <div>
+        <h4>רון טבקמן הנדסה</h4>
+        <p>חרטוט · ריתוך · הנדסה</p>
+        <p>קיבוץ העוגן</p>
+      </div>
+      <div>
+        <h4>יצירת קשר</h4>
+        <a href="tel:0509131402">050-913-1402</a>
+        <a href="https://wa.me/972509131402" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <div>
+        <h4>ניווט</h4>
+        <a href="#services">שירותים</a>
+        <a href="#gallery">גלריה</a>
+        <a href="#contact">יצירת קשר</a>
+      </div>
+    </div>
+    <p class="footer-note">האתר נמצא בבנייה מתמשכת — תמונות, לוגו, ולאחר מכן התחברות פעילה, תשלומים וניהול חשבוניות יתווספו בהמשך.</p>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">כניסת לקוחות</h3>
+      <button class="modal-close" id="modalClose" aria-label="סגירה">✕</button>
+    </div>
+    <div class="modal-msg" id="modalMsg">האזור בבנייה — ההתחברות תופעל בשלב הבא של האתר.</div>
+    <form id="modalForm">
+      <div class="field" style="margin-bottom:12px;">
+        <label for="loginUser">שם משתמש / טלפון</label>
+        <input id="loginUser" type="text" placeholder="לדוגמה: 050-000-0000">
+      </div>
+      <div class="field" style="margin-bottom:16px;">
+        <label for="loginPass">סיסמה</label>
+        <input id="loginPass" type="password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center;">התחברות</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var backdrop = document.getElementById('modalBackdrop');
+    var modalTitle = document.getElementById('modalTitle');
+    var modalMsg = document.getElementById('modalMsg');
+    var modalForm = document.getElementById('modalForm');
+
+    function openPortal(kind){
+      modalTitle.textContent = kind === 'employee' ? 'כניסת עובדים' : 'כניסת לקוחות';
+      modalMsg.classList.remove('show');
+      backdrop.classList.add('open');
+    }
+    function closePortal(){ backdrop.classList.remove('open'); }
+
+    document.querySelectorAll('[data-open-portal]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        openPortal(btn.getAttribute('data-open-portal'));
+      });
+    });
+    document.querySelectorAll('[data-portal]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        openPortal(btn.getAttribute('data-portal'));
+      });
+    });
+    document.getElementById('modalClose').addEventListener('click', closePortal);
+    backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closePortal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePortal(); });
+
+    modalForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      modalMsg.classList.add('show');
+    });
+
+    var composeForm = document.getElementById('composeForm');
+    composeForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('cName').value.trim();
+      var phone = document.getElementById('cPhone').value.trim();
+      var msg = document.getElementById('cMsg').value.trim();
+      var text = 'שלום, שמי ' + name + ' (טלפון לחזרה: ' + phone + ').';
+      if(msg){ text += ' ' + msg; }
+      window.open('https://wa.me/972509131402?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    });
+
+    var menuToggle = document.getElementById('menuToggle');
+    var mainNav = document.querySelector('.main-nav');
+    menuToggle.addEventListener('click', function(){
+      var isOpen = mainNav.style.display === 'flex';
+      mainNav.style.display = isOpen ? 'none' : 'flex';
+      mainNav.style.flexDirection = 'column';
+      mainNav.style.position='absolute';
+      mainNav.style.insetInlineEnd='24px';
+      mainNav.style.top='58px';
+      mainNav.style.background='var(--bg-elevated)';
+      mainNav.style.border='1px solid var(--line)';
+      mainNav.style.padding='14px 18px';
+      mainNav.style.borderRadius='2px';
+      mainNav.style.boxShadow='var(--shadow)';
+      mainNav.style.zIndex='50';
+    });
+  })();
+</script>
